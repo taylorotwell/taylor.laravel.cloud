@@ -19,10 +19,13 @@ Route::get('/auth', function () {
     $user = User::where('email', 'taylor@laravel.com')->first();
 
     if (! $user) {
-        $user = User::factory()->create([
-            'name' => 'Taylor Otwell',
-            'email' => 'taylor@laravel.com',
-        ]);
+        $user = new User;
+
+        $user->name = 'Taylor Otwell';
+        $user->email = 'taylor@laravel.com';
+        $user->password = bcrypt('password');
+
+        $user->save();
     }
 
     Auth::login($user);
